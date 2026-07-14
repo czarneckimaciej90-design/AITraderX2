@@ -8,6 +8,9 @@ Main application entry point.
 
 from datetime import datetime
 from config.settings import Settings
+from logs.logger import log
+from exchange.binance import BinanceExchange
+from indicators.ema import calculate_ema, ema_signal
 
 
 class ATXCore:
@@ -33,6 +36,28 @@ class ATXCore:
         print("[OK] Core Engine")
         print("[OK] System Initialised")
         print("[WAIT] Loading modules...")
+        exchange = BinanceExchange()
+        exchange.connect()
+
+        price = exchange.get_price()
+        print(f"BTC Price : ${price}") 
+
+        closes = exchange.get_candles()
+
+        print("Last 100 candles")
+
+        for close in closes:
+            print(f"Close: {close}")
+
+        ema10 = calculate_ema(closes, 10)
+        print(f"EMA 10: {ema10}")
+
+        signal, ema10, ema20 = ema_signal(closes)
+        print(f"EMA10: {ema10}")
+        print(f"EMA20: {ema20}")
+        print(f"Signal: {signal}")
+
+        log("ATX Platform uruchomiona poprawnie.")
 
 
 if __name__ == "__main__":
