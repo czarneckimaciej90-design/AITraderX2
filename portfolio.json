@@ -1,0 +1,39 @@
+{
+    "balance": 617.897630954405,
+    "start_balance": 1000,
+    "positions": {
+        "LTCUSDT": {
+            "entry": 44.57,
+            "size": 48.8,
+            "highest_price": 45.0
+        },
+        "ETCUSDT": {
+            "entry": 7.08,
+            "size": 52.4
+        },
+        "BNBUSDT": {
+            "entry": 580.77,
+            "size": 54.0
+        },
+        "USDCUSDT": {
+            "entry": 1.00046,
+            "size": 49.52
+        },
+        "CELRUSDT": {
+            "entry": 0.001768,
+            "size": 47.11
+        },
+        "XTZUSDT": {
+            "entry": 0.2326,
+            "size": 47.11
+        },
+        "MBLUSDT": {
+            "entry": 0.0007,
+            "size": 47.11
+        },
+        "JSTUSDT": {
+            "entry": 0.10004,
+            "size": 43.48
+        }
+    }
+}
