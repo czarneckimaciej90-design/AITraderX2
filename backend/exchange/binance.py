@@ -14,7 +14,7 @@ class BinanceExchange:
         data = response.json()
         return float(data["price"])
     
-    def get_candles(self, symbol="BTCUSDT", interval="1m", limit=10):
+    def get_candles(self, symbol="BTCUSDT", interval="1m", limit=100 ):
          url = (
              f"https://api.binance.com/api/v3/klines"
              f"?symbol={symbol}&interval={interval}&limit={limit}"
