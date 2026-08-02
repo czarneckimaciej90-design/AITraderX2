@@ -2,6 +2,11 @@ def analyze(market):
 
     volumes = market["volumes"]
 
+    print("--------------------------------")
+    print("Volume sample:", volumes[-5:])
+    print("Average:", round(sum(volumes[:-1]) / (len(volumes) - 1), 4))
+    print("Current:", volumes[-1])
+
     if len(volumes) < 20:
 
         return {

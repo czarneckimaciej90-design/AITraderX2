@@ -67,7 +67,15 @@ class AnalysisEngine:
 
             },
 
-            "volume": volume
+            "volume": volume,
+
+            "market": {
+
+                "score": market.get("market_score", 100),
+
+                "validation": market.get("validation", {})
+
+            }
 
         }
 

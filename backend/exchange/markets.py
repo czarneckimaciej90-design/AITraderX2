@@ -17,4 +17,11 @@ def get_markets():
         ):
             markets.append(symbol["symbol"])
 
+    print(f"Markets found: {len(markets)}")
+    print("AAPLBUSDT:", "AAPLBUSDT" in markets)
+    print("AMZNBUSDT:", "AMZNBUSDT" in markets)
+    print("TQQQBUSDT:", "TQQQBUSDT" in markets)
+    print("SOXSBUSDT:", "SOXSBUSDT" in markets)
+    print("Total:", len(markets))
+
     return markets

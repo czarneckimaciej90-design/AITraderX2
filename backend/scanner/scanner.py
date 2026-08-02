@@ -1,11 +1,12 @@
 from concurrent.futures import ThreadPoolExecutor
-
+from analysis.market_validator import MarketValidator
 
 class MarketScanner:
 
     def __init__(self, exchange):
 
         self.exchange = exchange
+        self.validator = MarketValidator()
 
     def scan_market(self, symbol):
 
@@ -29,6 +30,23 @@ class MarketScanner:
 
         }
 
+        if symbol == "BTCUSDT":
+            print("BTC last volumes:", candles["volume"].tail().tolist())
+
+        if symbol == "ETHUSDT":
+            print("ETH last volumes:", candles["volume"].tail().tolist())
+
+        if symbol == "AAPLBUSDT":
+            print("AAPL last volumes:", candles["volume"].tail().tolist())
+
+        validation = self.validator.validate(market)
+
+        if not validation["valid"]:
+            return symbol, None
+
+        market["market_score"] = validation["market_score"]
+        market["validation"] = validation
+
         return symbol, market
 
     def scan_all(self, symbols):
@@ -48,6 +66,9 @@ class MarketScanner:
             for future in futures:
 
                 symbol, market = future.result()
+
+                if market is None:
+                    continue
 
                 results[symbol] = market
 
