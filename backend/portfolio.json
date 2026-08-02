@@ -1,0 +1,110 @@
+{
+    "balance": 549.6233581177341,
+    "start_balance": 1000.0,
+    "positions": {
+        "ASRUSDT": {
+            "symbol": "ASRUSDT",
+            "entry": 0.855,
+            "current_price": 0.855,
+            "size": 60.05,
+            "open_time": "2026-08-02 17:01:09",
+            "highest_price": 0.855,
+            "lowest_price": 0.855,
+            "highest_profit": 0.0,
+            "lowest_profit": 0.0,
+            "update_count": 13,
+            "exit_reason": ""
+        },
+        "ADXUSDT": {
+            "symbol": "ADXUSDT",
+            "entry": 0.0586,
+            "current_price": 0.0586,
+            "size": 50.57,
+            "open_time": "2026-08-02 17:02:29",
+            "highest_price": 0.0587,
+            "lowest_price": 0.0586,
+            "highest_profit": 0.17,
+            "lowest_profit": 0.0,
+            "update_count": 9,
+            "exit_reason": ""
+        },
+        "PORTOUSDT": {
+            "symbol": "PORTOUSDT",
+            "entry": 0.442,
+            "current_price": 0.44,
+            "size": 63.21,
+            "open_time": "2026-08-02 17:02:29",
+            "highest_price": 0.442,
+            "lowest_price": 0.44,
+            "highest_profit": 0.0,
+            "lowest_profit": -0.45,
+            "update_count": 9,
+            "exit_reason": ""
+        },
+        "QIUSDT": {
+            "symbol": "QIUSDT",
+            "entry": 0.001288,
+            "current_price": 0.001288,
+            "size": 56.89,
+            "open_time": "2026-08-02 17:08:24",
+            "highest_price": 0.001288,
+            "lowest_price": 0.001288,
+            "highest_profit": 0.0,
+            "lowest_profit": 0.0,
+            "update_count": 1,
+            "exit_reason": ""
+        },
+        "DOTUSDT": {
+            "symbol": "DOTUSDT",
+            "entry": 0.796,
+            "current_price": 0.796,
+            "size": 53.73,
+            "open_time": "2026-08-02 17:10:24",
+            "highest_price": 0.796,
+            "lowest_price": 0.796,
+            "highest_profit": 0.0,
+            "lowest_profit": 0.0,
+            "update_count": 1,
+            "exit_reason": ""
+        },
+        "ROSEUSDT": {
+            "symbol": "ROSEUSDT",
+            "entry": 0.00561,
+            "current_price": 0.00561,
+            "size": 50.57,
+            "open_time": "2026-08-02 17:10:24",
+            "highest_price": 0.00561,
+            "lowest_price": 0.00561,
+            "highest_profit": 0.0,
+            "lowest_profit": 0.0,
+            "update_count": 1,
+            "exit_reason": ""
+        },
+        "RIFUSDT": {
+            "symbol": "RIFUSDT",
+            "entry": 0.0915,
+            "current_price": 0.0915,
+            "size": 53.73,
+            "open_time": "2026-08-02 17:10:24",
+            "highest_price": 0.0915,
+            "lowest_price": 0.0915,
+            "highest_profit": 0.0,
+            "lowest_profit": 0.0,
+            "update_count": 1,
+            "exit_reason": ""
+        },
+        "TKOUSDT": {
+            "symbol": "TKOUSDT",
+            "entry": 0.0488,
+            "current_price": 0.0488,
+            "size": 56.89,
+            "open_time": "2026-08-02 17:10:24",
+            "highest_price": 0.0488,
+            "lowest_price": 0.0488,
+            "highest_profit": 0.0,
+            "lowest_profit": 0.0,
+            "update_count": 0,
+            "exit_reason": ""
+        }
+    }
+}

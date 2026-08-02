@@ -1,65 +1,130 @@
 """
 ====================================================
 AI Trader X Platform
-Version: 0.0.1
+Version: 0.3 Stable
 ====================================================
 Main application entry point.
+Clean architecture:
+Engine -> MarketProcessor -> TradeManager
+====================================================
 """
 
 from datetime import datetime
+
 from config.settings import Settings
 from logs.logger import log
+
 from exchange.binance import BinanceExchange
-from indicators.ema import calculate_ema, ema_signal
+
+from scanner.scanner import MarketScanner
+
+from core.engine import Engine
+from core.market_processor import MarketProcessor
+
+from portfolio.portfolio import Portfolio
+from portfolio.capital_manager import CapitalManager
+from portfolio.position_manager import PositionManager
+
+from brain.brain import Brain
+from brain.memory import Memory
+from brain.statistics import BrainStatistics
+
+from backtesting.backtester import Backtester
+
+from execution.trade_manager import TradeManager
+from performance.performance import Performance
 
 
 class ATXCore:
+
     def __init__(self):
-        self.version = "0.0.1"
+
+        self.version = "0.3"
+
         self.started = datetime.now()
 
     def start(self):
+
         settings = Settings()
 
         print("=" * 60)
         print(settings.APP_NAME)
-        print(f"Version : {settings.VERSION}")
+        print(f"Version : {self.version}")
         print(f"Exchange : {settings.EXCHANGE}")
         print(f"Demo Mode : {settings.DEMO_MODE}")
-        print(f"Start Balance : £{settings.START_BALANCE}")
         print("=" * 60)
 
-        print("AI Trader X Platform")
-        print(f"Version : {self.version}")
         print(f"Started : {self.started}")
-        print("=" * 60)
+
         print("[OK] Core Engine")
         print("[OK] System Initialised")
-        print("[WAIT] Loading modules...")
+
         exchange = BinanceExchange()
         exchange.connect()
 
-        price = exchange.get_price()
-        print(f"BTC Price : ${price}") 
+        scanner = MarketScanner(exchange)
 
-        closes = exchange.get_candles()
+        portfolio = Portfolio(
+            balance=1000,
+            max_positions=8
+        )
 
-        print("Last 100 candles")
+        portfolio.load()
 
-        for close in closes:
-            print(f"Close: {close}")
+        performance = Performance(
+            portfolio
+        )
 
-        ema10 = calculate_ema(closes, 10)
-        print(f"EMA 10: {ema10}")
+        trade_manager = TradeManager(portfolio)
 
-        signal, ema10, ema20 = ema_signal(closes)
-        print(f"EMA10: {ema10}")
-        print(f"EMA20: {ema20}")
-        print(f"Signal: {signal}")
+        memory = Memory()
 
-        log("ATX Platform uruchomiona poprawnie.")
+        backtester = Backtester()
 
+        brain = Brain()
+
+        statistics = BrainStatistics()
+
+        position_manager = PositionManager()
+
+        capital_manager = CapitalManager(
+            portfolio.balance,
+            reserve_percent=20,
+            max_positions=8
+        )
+
+        processor = MarketProcessor(
+            brain=brain,
+            portfolio=portfolio,
+            trade_manager=trade_manager,
+            capital_manager=capital_manager,
+            position_manager=position_manager,
+            memory=memory
+        )
+
+        engine = Engine(
+            exchange=exchange,
+            scanner=scanner,
+            portfolio=portfolio,
+            position_manager=position_manager,
+            brain=brain,
+            trade_manager=trade_manager,
+            capital_manager=capital_manager,
+            memory=memory,
+            backtester=backtester,
+            statistics=statistics,
+            processor=processor,
+            performance=performance
+        )
+
+        print("[OK] Core Engine Ready")
+
+        print("[OK] Starting Engine...")
+
+        engine.start()
 
 if __name__ == "__main__":
+
     app = ATXCore()
+
     app.start()
