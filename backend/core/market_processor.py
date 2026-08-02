@@ -72,6 +72,8 @@ class MarketProcessor:
 
             "reasons": brain_result["reasons"],
 
+            "brain_version": brain_result["brain_version"],
+
             "ema10": ema10,
 
             "ema20": ema20,
@@ -114,7 +116,14 @@ class MarketProcessor:
             score=processed["score"],
             confidence=processed["confidence"],
             rsi=processed["rsi"],
-            histogram=processed["histogram"]
+            histogram=processed["histogram"],
+            atr=processed["atr"],
+            ema10=processed["ema10"],
+            ema20=processed["ema20"],
+            trend=processed["trend"],
+            volume_ratio=processed["volume_ratio"],
+            volume_spike=processed["volume_spike"],
+            brain_version=processed["brain_version"]
         )
 
     def execute_sell(self, processed):
@@ -172,6 +181,7 @@ class MarketProcessor:
         print(f"ATR         : {processed['atr']}")
         print(f"Volume x    : {processed['volume_ratio']}")
         print(f"VolumeSpike : {processed['volume_spike']}")
+        print(f"Brain       : {processed['brain_version']}")
         print(
             f"Reasons     : {', '.join(processed['reasons'])}"
         )

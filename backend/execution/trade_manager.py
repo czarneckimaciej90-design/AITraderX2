@@ -17,7 +17,14 @@ class TradeManager:
         score,
         confidence,
         rsi,
-        histogram
+        histogram,
+        atr,
+        ema10,
+        ema20,
+        trend,
+        volume_ratio,
+        volume_spike,
+        brain_version
     ):
 
         if self.portfolio.has_position(symbol):
@@ -50,7 +57,14 @@ class TradeManager:
             score=score,
             confidence=confidence,
             rsi=rsi,
-            histogram=histogram
+            histogram=histogram,
+            atr=atr,
+            ema10=ema10,
+            ema20=ema20,
+            trend=trend,
+            volume_ratio=volume_ratio,
+            volume_spike=volume_spike,
+            brain_version=brain_version
         )
 
         print(f"[TRADE MANAGER] BUY completed -> {symbol}")
@@ -66,7 +80,6 @@ class TradeManager:
         if not self.portfolio.has_position(symbol):
             return False
 
-        # Zachowujemy całą pozycję przed sprzedażą
         position = self.portfolio.positions[symbol].copy()
 
         trade_size = position["size"]
