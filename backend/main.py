@@ -27,8 +27,10 @@ from portfolio.position_manager import PositionManager
 
 from brain.brain import Brain
 from brain.memory import Memory
+from brain.learning_memory import LearningMemory
 from brain.statistics import BrainStatistics
 from brain.learning_engine import LearningEngine
+
 
 from backtesting.backtester import Backtester
 
@@ -78,15 +80,18 @@ class ATXCore:
 
         memory = Memory()
 
-        trade_manager = TradeManager(
-            portfolio
-        )
+        learning_memory = LearningMemory()
         
         backtester = Backtester()
 
         brain = Brain()
 
         statistics = BrainStatistics()
+
+        trade_manager = TradeManager(
+            portfolio,
+            learning_memory
+        )
 
         learning_engine = LearningEngine()
 

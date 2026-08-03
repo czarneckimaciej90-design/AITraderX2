@@ -113,13 +113,32 @@ class MarketProcessor:
 
     def execute_buy(self, processed):
 
-        if not processed["market_validation"]["valid"]:
-            return
-        
         symbol = processed["symbol"]
+
+        # ===========================
+        # MARKET VALIDATOR
+        # ===========================
+
+        if not processed["market_validation"].get("valid", False):
+            return
+
+        # ===========================
+        # BRAIN DECISION
+        # ===========================
+
+        if processed["decision"] != "BUY":
+            return
+
+        # ===========================
+        # POSITION EXISTS
+        # ===========================
 
         if self.portfolio.has_position(symbol):
             return
+
+        # ===========================
+        # CAPITAL MANAGER
+        # ===========================
 
         position_size = self.capital_manager.calculate_position_size(
             processed["score"],
@@ -129,6 +148,10 @@ class MarketProcessor:
 
         if position_size <= 0:
             return
+
+        # ===========================
+        # EXECUTE BUY
+        # ===========================
 
         self.trade_manager.buy(
             symbol=symbol,

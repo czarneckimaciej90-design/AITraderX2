@@ -172,6 +172,7 @@ class LearningMemory:
         self._save(history)
 
         return True
+    
     def update_open_position(
         self,
         symbol,
