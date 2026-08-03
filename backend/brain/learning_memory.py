@@ -178,7 +178,7 @@ class LearningMemory:
         symbol,
         position
     ):
-
+        print(f"[LEARNING UPDATE] {symbol}")
         history = self._load()
 
         for trade in history:
@@ -241,6 +241,13 @@ class LearningMemory:
                     )
                 )
 
+                profit = position.get("profit_percent", 0.0)
+
+                print(
+                    f"[UPDATED] {symbol} | "
+                    f"Updates={trade['update_count']} | "
+                    f"Profit={profit:.2f}%"
+                )
                 # =====================
                 # SAVE
                 # =====================

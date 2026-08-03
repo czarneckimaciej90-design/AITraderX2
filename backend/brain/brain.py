@@ -263,6 +263,16 @@ class Brain:
 
         }
 
+        print(
+    "\n========== BRAIN =========="
+        )
+        print(f"Symbol      : {symbol}")
+        print(f"Score       : {score}")
+        print(f"Confidence  : {confidence}")
+        print(f"Buy Allowed : {buy_allowed}")
+        print(f"Decision    : {decision}")
+        print("===========================\n")
+
         return {
 
             "decision": decision,

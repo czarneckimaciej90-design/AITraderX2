@@ -10,7 +10,8 @@ class MarketProcessor:
         trade_manager,
         capital_manager,
         position_manager,
-        memory
+        memory,
+        learning_memory
     ):
 
         self.brain = brain
@@ -19,7 +20,7 @@ class MarketProcessor:
         self.capital_manager = capital_manager
         self.position_manager = position_manager
         self.memory = memory
-
+        self.learning_memory = learning_memory
         self.analysis = AnalysisEngine()
 
     def process(self, symbol, market):
@@ -64,12 +65,16 @@ class MarketProcessor:
             symbol,
             analysis
         )
-
         if self.portfolio.has_position(symbol):
 
             self.portfolio.update_price(
                 symbol,
                 closes[-1]
+            )
+
+            self.learning_memory.update_open_position(
+                symbol,
+                self.portfolio.positions[symbol]
             )
 
         return {

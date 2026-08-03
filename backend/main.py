@@ -98,8 +98,8 @@ class ATXCore:
         position_manager = PositionManager()
 
         capital_manager = CapitalManager(
-            portfolio.balance,
-            reserve_percent=20,
+            portfolio=portfolio,
+            reserve_percent=5,
             max_positions=8
         )
 
@@ -109,7 +109,8 @@ class ATXCore:
             trade_manager=trade_manager,
             capital_manager=capital_manager,
             position_manager=position_manager,
-            memory=memory
+            memory=memory,
+            learning_memory=learning_memory
         )
 
         engine = Engine(
