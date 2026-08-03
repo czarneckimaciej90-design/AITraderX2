@@ -44,8 +44,21 @@ class MarketProcessor:
         volume_ratio = analysis["volume"]["ratio"]
         volume_spike = analysis["volume"]["spike"]
 
-        market_score = analysis.get("market", {}).get("score", 100)
-        market_validation = analysis.get("market", {}).get("validation", {})
+        market_score = analysis.get(
+            "market",
+            {}
+        ).get(
+            "score",
+            100
+        )
+
+        market_validation = analysis.get(
+            "market",
+            {}
+        ).get(
+            "validation",
+            {}
+        )
 
         brain_result = self.brain.analyze(
             symbol,
@@ -77,22 +90,23 @@ class MarketProcessor:
 
             "brain_version": brain_result["brain_version"],
 
-            "ema10": ema10,
+            "learning_data": brain_result.get(
+                "learning_data",
+                {}
+            ),
 
+            "ema10": ema10,
             "ema20": ema20,
 
             "rsi": rsi,
-
             "histogram": histogram,
 
             "atr": atr,
 
             "volume_ratio": volume_ratio,
-
             "volume_spike": volume_spike,
 
             "market_score": market_score,
-
             "market_validation": market_validation
 
         }
@@ -130,7 +144,9 @@ class MarketProcessor:
             trend=processed["trend"],
             volume_ratio=processed["volume_ratio"],
             volume_spike=processed["volume_spike"],
-            brain_version=processed["brain_version"]
+            brain_version=processed["brain_version"],
+            market_score=processed["market_score"],
+            market_validation=processed["market_validation"]
         )
 
     def execute_sell(self, processed):
@@ -167,7 +183,11 @@ class MarketProcessor:
 
             "score": processed["score"],
 
-            "rsi": processed["rsi"]
+            "rsi": processed["rsi"],
+
+            "market_score": processed["market_score"],
+
+            "volume_ratio": processed["volume_ratio"]
 
         }
 

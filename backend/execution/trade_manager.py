@@ -1,5 +1,4 @@
-from brain.learning_memory import LearningMemory
-from execution.paper_trading import paper_buy, paper_sell
+from datetime import datetime
 
 
 class TradeManager:
@@ -7,7 +6,7 @@ class TradeManager:
     def __init__(self, portfolio):
 
         self.portfolio = portfolio
-        self.learning = LearningMemory()
+
 
     def buy(
         self,
@@ -24,52 +23,80 @@ class TradeManager:
         trend,
         volume_ratio,
         volume_spike,
-        brain_version
+        brain_version,
+        market_score=0,
+        market_validation=None
     ):
 
-        if self.portfolio.has_position(symbol):
-            return False
+        print("\n========== BUY ==========")
 
-        if size <= 0:
-            print(f"[TRADE MANAGER] Invalid position size ({size})")
-            return False
+        print(f"Symbol : {symbol}")
+        print(f"Price  : {price}")
+        print(f"Size   : {size}")
+        print("=========================")
 
-        success = self.portfolio.buy(
+
+        trade = {
+
+            "time":
+                datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                ),
+
+            "symbol": symbol,
+
+            "decision": "BUY",
+
+            "entry_price": price,
+
+            "size": size,
+
+            "score": score,
+
+            "confidence": confidence,
+
+            "market_score": market_score,
+
+            "market_validation":
+                market_validation or {},
+
+
+            "rsi": rsi,
+
+            "histogram": histogram,
+
+            "atr": atr,
+
+            "ema10": ema10,
+
+            "ema20": ema20,
+
+            "trend": trend,
+
+
+            "volume_ratio": volume_ratio,
+
+            "volume_spike": volume_spike,
+
+
+            "brain_version": brain_version,
+
+            "result": "PENDING"
+
+        }
+
+
+        self.portfolio.open_position(
             symbol,
             price,
-            size
+            size,
+            trade
         )
 
-        if not success:
-            return False
 
-        paper_buy(
-            symbol=symbol,
-            price=price,
-            size=size
-        )
+        return trade
 
-        self.learning.create_trade(
-            symbol=symbol,
-            decision="BUY",
-            entry_price=price,
-            size=size,
-            score=score,
-            confidence=confidence,
-            rsi=rsi,
-            histogram=histogram,
-            atr=atr,
-            ema10=ema10,
-            ema20=ema20,
-            trend=trend,
-            volume_ratio=volume_ratio,
-            volume_spike=volume_spike,
-            brain_version=brain_version
-        )
 
-        print(f"[TRADE MANAGER] BUY completed -> {symbol}")
-
-        return True
 
     def sell(
         self,
@@ -77,35 +104,11 @@ class TradeManager:
         price
     ):
 
-        if not self.portfolio.has_position(symbol):
-            return False
+        print("\n========== SELL ==========")
 
-        position = self.portfolio.positions[symbol].copy()
+        print(f"Symbol : {symbol}")
+        print(f"Price  : {price}")
 
-        trade_size = position["size"]
+        print("==========================")
 
-        profit = self.portfolio.sell(
-            symbol,
-            price
-        )
-
-        if profit is None:
-            return False
-
-        paper_sell(
-            symbol=symbol,
-            price=price,
-            size=trade_size
-        )
-
-        self.learning.close_trade(
-            symbol=symbol,
-            exit_price=price,
-            position=position
-        )
-
-        print(
-            f"[TRADE MANAGER] SELL completed -> {symbol} | Profit: {round(profit, 2)} USDT"
-        )
-
-        return profit
+        return True
