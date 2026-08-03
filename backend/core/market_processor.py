@@ -113,9 +113,9 @@ class MarketProcessor:
 
     def execute_buy(self, processed):
 
-        if processed["decision"] != "BUY":
+        if not processed["market_validation"]["valid"]:
             return
-
+        
         symbol = processed["symbol"]
 
         if self.portfolio.has_position(symbol):

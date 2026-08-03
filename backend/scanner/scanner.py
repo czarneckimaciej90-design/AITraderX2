@@ -14,6 +14,9 @@ class MarketScanner:
 
         candles = self.exchange.get_candles(symbol=symbol)
 
+        if candles is None or len(candles) == 0:
+            return symbol, None
+
         market = {
 
             "candles": candles,
@@ -34,13 +37,14 @@ class MarketScanner:
 
         validation = self.validator.validate(market)
 
-        # Odrzuć słabe rynki
-        if not validation["valid"]:
-            return symbol, None
-
+        # ZAWSZE zapisujemy wynik walidacji
         market["market_score"] = validation["market_score"]
         market["validation"] = validation
 
+        # UWAGA:
+        # Nie odrzucamy rynku tutaj.
+        # Validator blokuje tylko nowe zakupy.
+        # Otwarte pozycje nadal muszą być aktualizowane.
         return symbol, market
 
     def scan_all(self, symbols):
@@ -68,11 +72,12 @@ class MarketScanner:
                 symbol, market = future.result()
 
                 if market is None:
-
-                    rejected += 1
                     continue
 
-                accepted += 1
+                if market["validation"]["valid"]:
+                    accepted += 1
+                else:
+                    rejected += 1
 
                 results[symbol] = market
 

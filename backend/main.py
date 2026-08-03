@@ -76,10 +76,12 @@ class ATXCore:
             portfolio
         )
 
-        trade_manager = TradeManager(portfolio)
-
         memory = Memory()
 
+        trade_manager = TradeManager(
+            portfolio
+        )
+        
         backtester = Backtester()
 
         brain = Brain()

@@ -6,6 +6,7 @@ class TradeManager:
     def __init__(self, portfolio):
 
         self.portfolio = portfolio
+        self.portfolio = portfolio
 
 
     def buy(
@@ -92,6 +93,8 @@ class TradeManager:
             size=size,
             metadata=trade
         )
+
+
 
 
         return trade
