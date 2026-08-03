@@ -1,5 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
+
 from analysis.market_validator import MarketValidator
+
 
 class MarketScanner:
 
@@ -30,17 +32,9 @@ class MarketScanner:
 
         }
 
-        if symbol == "BTCUSDT":
-            print("BTC last volumes:", candles["volume"].tail().tolist())
-
-        if symbol == "ETHUSDT":
-            print("ETH last volumes:", candles["volume"].tail().tolist())
-
-        if symbol == "AAPLBUSDT":
-            print("AAPL last volumes:", candles["volume"].tail().tolist())
-
         validation = self.validator.validate(market)
 
+        # Odrzuć słabe rynki
         if not validation["valid"]:
             return symbol, None
 
@@ -53,14 +47,20 @@ class MarketScanner:
 
         results = {}
 
+        accepted = 0
+        rejected = 0
+
         with ThreadPoolExecutor(max_workers=20) as executor:
 
             futures = [
+
                 executor.submit(
                     self.scan_market,
                     symbol
                 )
+
                 for symbol in symbols
+
             ]
 
             for future in futures:
@@ -68,8 +68,17 @@ class MarketScanner:
                 symbol, market = future.result()
 
                 if market is None:
+
+                    rejected += 1
                     continue
 
+                accepted += 1
+
                 results[symbol] = market
+
+        print("\n===== MARKET VALIDATOR =====")
+        print(f"Accepted : {accepted}")
+        print(f"Rejected : {rejected}")
+        print(f"Total    : {accepted + rejected}")
 
         return results

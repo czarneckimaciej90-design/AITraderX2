@@ -44,6 +44,9 @@ class MarketProcessor:
         volume_ratio = analysis["volume"]["ratio"]
         volume_spike = analysis["volume"]["spike"]
 
+        market_score = analysis.get("market", {}).get("score", 100)
+        market_validation = analysis.get("market", {}).get("validation", {})
+
         brain_result = self.brain.analyze(
             symbol,
             analysis
@@ -86,7 +89,11 @@ class MarketProcessor:
 
             "volume_ratio": volume_ratio,
 
-            "volume_spike": volume_spike
+            "volume_spike": volume_spike,
+
+            "market_score": market_score,
+
+            "market_validation": market_validation
 
         }
 
@@ -181,6 +188,7 @@ class MarketProcessor:
         print(f"ATR         : {processed['atr']}")
         print(f"Volume x    : {processed['volume_ratio']}")
         print(f"VolumeSpike : {processed['volume_spike']}")
+        print(f"MarketScore : {processed['market_score']}")
         print(f"Brain       : {processed['brain_version']}")
         print(
             f"Reasons     : {', '.join(processed['reasons'])}"
