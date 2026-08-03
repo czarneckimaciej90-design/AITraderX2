@@ -22,15 +22,32 @@ class Memory:
                     "Symbol",
                     "Trend",
                     "Decision",
+                    "Score",
                     "Confidence",
-                    "RSI"
+                    "RSI",
+                    "ATR",
+                    "Histogram",
+                    "EMA10",
+                    "EMA20",
+                    "MarketScore",
+                    "VolumeRatio",
+                    "VolumeSpike"
                 ])
 
             writer.writerow([
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                result["symbol"],
-                result["trend"],
-                result["decision"],
-                result["confidence"],
-                round(result["rsi"], 2)
+                result.get("symbol"),
+                result.get("trend"),
+                result.get("decision"),
+                result.get("score", 0),
+                result.get("confidence", 0),
+                round(result.get("rsi", 0), 2),
+                result.get("atr", 0),
+                result.get("histogram", 0),
+                result.get("ema10", 0),
+                result.get("ema20", 0),
+                result.get("market_score", 0),
+                result.get("volume_ratio", 0),
+                result.get("volume_spike", False)
             ])
+

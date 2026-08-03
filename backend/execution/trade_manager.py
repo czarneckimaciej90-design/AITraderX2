@@ -87,10 +87,10 @@ class TradeManager:
 
 
         self.portfolio.open_position(
-            symbol,
-            price,
-            size,
-            trade
+            symbol=symbol,
+            price=price,
+            size=size,
+            metadata=trade
         )
 
 
@@ -112,3 +112,4 @@ class TradeManager:
         print("==========================")
 
         return True
+
