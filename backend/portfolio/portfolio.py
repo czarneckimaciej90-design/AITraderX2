@@ -12,7 +12,13 @@ class Portfolio:
         self.max_positions = max_positions
         self.positions = {}
 
-    def buy(self, symbol, price, size):
+    def buy(
+        self,
+        symbol,
+        price,
+        size,
+        metadata=None
+    ):
 
         if self.has_position(symbol):
             print(f"[PORTFOLIO] Position already exists: {symbol}")
@@ -39,6 +45,8 @@ class Portfolio:
             "symbol": symbol,
 
             "entry": float(price),
+
+            "metadata": metadata or {},
 
             "current_price": float(price),
 
@@ -165,6 +173,24 @@ class Portfolio:
         self.positions[symbol]["current_price"] = float(price)
 
         self.positions[symbol]["update_count"] += 1
+        
+    def open_position(
+        self,
+        symbol,
+        price,
+        size,
+        metadata=None
+    ):
+        """
+        Compatibility wrapper used by TradeManager.
+        """
+
+        return self.buy(
+            symbol=symbol,
+            price=price,
+            size=size,
+            metadata=metadata
+        )
 
     def load(self):
 

@@ -52,7 +52,9 @@ class LearningMemory:
         trend="UNKNOWN",
         volume_ratio=0,
         volume_spike=False,
-        brain_version="0.5"
+        brain_version="0.5",
+        market_score=0,
+        market_validation=None
     ):
 
         history = self._load()
@@ -78,6 +80,8 @@ class LearningMemory:
             "status": "OPEN",
             "result": "PENDING",
             "brain_version": brain_version,
+            "market_score": int(market_score),
+            "market_validation": market_validation or {},
 
             # =====================
             # TIME
