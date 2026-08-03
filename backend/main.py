@@ -28,6 +28,7 @@ from portfolio.position_manager import PositionManager
 from brain.brain import Brain
 from brain.memory import Memory
 from brain.statistics import BrainStatistics
+from brain.learning_engine import LearningEngine
 
 from backtesting.backtester import Backtester
 
@@ -85,6 +86,8 @@ class ATXCore:
 
         statistics = BrainStatistics()
 
+        learning_engine = LearningEngine()
+
         position_manager = PositionManager()
 
         capital_manager = CapitalManager(
@@ -113,6 +116,7 @@ class ATXCore:
             memory=memory,
             backtester=backtester,
             statistics=statistics,
+            learning_engine=learning_engine,
             processor=processor,
             performance=performance
         )

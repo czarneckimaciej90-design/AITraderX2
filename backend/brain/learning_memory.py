@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 
 
+
 class LearningMemory:
 
     FILE = "brain_learning.json"

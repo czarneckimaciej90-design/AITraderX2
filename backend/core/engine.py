@@ -23,6 +23,7 @@ class Engine:
         memory=None,
         backtester=None,
         statistics=None,
+        learning_engine=None,
         processor=None,
         performance=None
     ):
@@ -39,6 +40,7 @@ class Engine:
         self.memory = memory
         self.backtester = backtester
         self.statistics = statistics
+        self.learning_engine = learning_engine
         self.processor = processor
         self.performance = performance
 

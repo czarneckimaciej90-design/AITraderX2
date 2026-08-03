@@ -1,6 +1,7 @@
 class Brain:
 
     def __init__(self):
+
         self.version = "0.6.0"
 
     def analyze(
@@ -8,6 +9,10 @@ class Brain:
         symbol,
         analysis
     ):
+
+        # ==========================
+        # INPUT
+        # ==========================
 
         ema10 = analysis["ema"]["ema10"]
         ema20 = analysis["ema"]["ema20"]
@@ -20,7 +25,13 @@ class Brain:
         volume_ratio = analysis["volume"]["ratio"]
         volume_spike = analysis["volume"]["spike"]
 
-        market_score = analysis.get("market", {}).get("score", 100)
+        market_score = analysis.get(
+            "market",
+            {}
+        ).get(
+            "score",
+            100
+        )
 
         score = 50
         reasons = []
@@ -50,7 +61,6 @@ class Brain:
             score -= 30
             buy_allowed = False
             reasons.append("Poor Market")
-            reasons.append("BUY BLOCKED")
 
         # ==========================
         # EMA
@@ -148,7 +158,6 @@ class Brain:
             score -= 20
             buy_allowed = False
             reasons.append("No Volatility")
-            reasons.append("BUY BLOCKED")
 
         elif atr < 0.001:
 
@@ -161,15 +170,14 @@ class Brain:
             reasons.append("ATR Active")
 
         # ==========================
-        # VOLUME GATE
+        # VOLUME
         # ==========================
 
         if volume_ratio < 0.15:
 
             score = min(score, 25)
             buy_allowed = False
-            reasons.append("Volume Gate Blocked")
-            reasons.append("BUY BLOCKED")
+            reasons.append("Volume Gate")
 
         elif volume_ratio < 0.30:
 
@@ -207,10 +215,13 @@ class Brain:
             reasons.append("Volume Spike")
 
         # ==========================
-        # LIMIT SCORE
+        # FINAL SCORE
         # ==========================
 
-        score = max(0, min(score, 100))
+        score = max(
+            0,
+            min(score, 100)
+        )
 
         confidence = score
 
@@ -230,6 +241,28 @@ class Brain:
 
             decision = "WAIT"
 
+        # ==========================
+        # LEARNING DATA
+        # ==========================
+
+        learning_data = {
+
+            "market_score": market_score,
+
+            "ema_bullish": ema10 > ema20,
+
+            "rsi": rsi,
+
+            "histogram": histogram,
+
+            "atr": atr,
+
+            "volume_ratio": volume_ratio,
+
+            "volume_spike": volume_spike
+
+        }
+
         return {
 
             "decision": decision,
@@ -238,8 +271,12 @@ class Brain:
 
             "confidence": confidence,
 
+            "market_score": market_score,
+
             "reasons": reasons,
 
-            "brain_version": self.version
+            "brain_version": self.version,
+
+            "learning_data": learning_data
 
         }
